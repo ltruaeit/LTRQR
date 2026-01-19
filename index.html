@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { font-family: 'Segoe UI', sans-serif; background-color: #2E1B70; color: white; text-align: center; padding: 20px; }
+  .card { background: #E33970; border-radius: 15px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid #0f3460; max-width: 400px; margin: auto; }
+  h1 { color: #FFFFFF; font-size: 1.5rem; margin-bottom: 5px; }
+  p.date { color: #95a5a6; font-size: 0.9rem; margin-bottom: 20px; }
+  .staff-list { list-style: none; padding: 0; font-size: 1.2rem; }
+  .staff-list li { padding: 10px 0; border-bottom: 1px solid #0f3460; }
+  .staff-list li:last-child { border-bottom: none; }
+  
+  /* Status Badge Styles */
+  .status-badge { padding: 3px 10px; border-radius: 10px; font-weight: bold; font-size: 0.8rem; transition: 0.3s; }
+  .on-duty { background: #4ecca3; color: #1a1a2e; }
+  .off-duty { background: #536162; color: white; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Today IT Night Shift</h1>
+  
+  <div id="clock-container">
+    <span id="live-clock">Loading...</span>
+  </div>
+
+  <ul class="staff-list">
+    <li> MYAT <span id="duty-status" class="status-badge">CHECKING...</span></li>
+  </ul>
+  
+  <a href="https://aeliadutyfree.sharepoint.com/" style="color: #4ecca3; text-decoration: none; font-size: 0.8rem;">for more information click here</a>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const hours = now.getHours();
+      
+      // 1. Update Clock Display
+      const timeString = now.toLocaleTimeString();
+      const dateString = now.toLocaleDateString(undefined, { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+      document.getElementById('live-clock').innerHTML = `${dateString} <br> ${timeString}`;
+
+      // 2. Logic for Duty Timing (9 PM to 6 AM)
+      // 21 is 9 PM, 6 is 6 AM
+      const statusBadge = document.getElementById('duty-status');
+      
+      if (hours >= 21 || hours < 6) {
+        statusBadge.innerHTML = "ON DUTY";
+        statusBadge.className = "status-badge on-duty";
+      } else {
+        statusBadge.innerHTML = "OFF DUTY";
+        statusBadge.className = "status-badge off-duty";
+      }
+    }
+
+    // Run immediately and then every second
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+
+  <p style="font-size: 0.7rem; color: #fce4ec; margin-top: 20px;">Shift: 9:00 PM - 6:00 AM</p>
+</div>
+
+</body>
+</html>
