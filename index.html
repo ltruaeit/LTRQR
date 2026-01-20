@@ -3,21 +3,70 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  body { font-family: 'Segoe UI', sans-serif; background-color: #2E1B70; color: white; text-align: center; padding: 20px; }
-  .card { background: #E33970; border-radius: 15px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid #0f3460; max-width: 400px; margin: auto; }
-  h1 { color: #FFFFFF; font-size: 1.5rem; margin-bottom: 5px; }
-  p.date { color: #95a5a6; font-size: 0.9rem; margin-bottom: 20px; }
-  .staff-list { list-style: none; padding: 0; font-size: 1.2rem; }
-  .staff-list li { padding: 10px 0; border-bottom: 1px solid #0f3460; }
+  /* Centering the card on the screen */
+  body { 
+    font-family: 'Segoe UI', sans-serif; 
+    background-color: #2E1B70; 
+    color: white; 
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* --- ADJUSTED: Larger Rectangle Logo Container --- */
+  .logo-container {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    background-color: white; 
+    /* Increased horizontal padding (40px) to make it a long rectangle */
+    padding: 12px 40px;      
+    border-radius: 6px;      
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Added min-width to ensure it stays wide even with small icons */
+    min-width: 150px; 
+  }
+
+  .top-left-img {
+    height: 50px; /* Slightly taller for better visibility */
+    width: auto;  
+  }
+  /* -------------------------------------------------- */
+
+  .card { 
+    background: #E33970; 
+    border-radius: 15px; 
+    padding: 30px; 
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4); 
+    border: 1px solid #0f3460; 
+    max-width: 400px; 
+    width: 90%; 
+    text-align: center;
+  }
+
+  h1 { color: #FFFFFF; font-size: 1.6rem; margin-bottom: 5px; }
+  #clock-container { margin: 15px 0; font-size: 1.1rem; }
+  
+  .staff-list { list-style: none; padding: 0; font-size: 1.3rem; margin: 20px 0; }
+  .staff-list li { padding: 15px 0; border-bottom: 1px solid rgba(15, 52, 96, 0.5); }
   .staff-list li:last-child { border-bottom: none; }
   
-  /* Status Badge Styles */
-  .status-badge { padding: 3px 10px; border-radius: 10px; font-weight: bold; font-size: 0.8rem; transition: 0.3s; }
+  .status-badge { padding: 5px 12px; border-radius: 10px; font-weight: bold; font-size: 0.85rem; transition: 0.3s; }
   .on-duty { background: #4ecca3; color: #1a1a2e; }
   .off-duty { background: #536162; color: white; }
 </style>
 </head>
 <body>
+
+<div class="logo-container">
+    <img src="https://www.lagardere-tr.ae/sites/default/files/styles/185x58/public/logo_hd_3.png" alt="Logo" class="top-left-img">
+</div>
 
 <div class="card">
   <h1>Today IT Night Shift</h1>
@@ -30,44 +79,21 @@
     <li> MYAT <span id="duty-status" class="status-badge">CHECKING...</span></li>
   </ul>
   
-  <a href="https://aeliadutyfree.sharepoint.com/sites/Lagardere-Helpdesk2?CT=1768827189118&OR=OWA-NT-Mail&CID=cafdeb8e-3092-01f9-c425-a9a5a6112148" style="color: #4ecca3; text-decoration: none; font-size: 0.8rem;">for more information click here</a>
+  <a href="https://aeliadutyfree.sharepoint.com/sites/Lagardere-Helpdesk2?CT=1768827189118&OR=OWA-NT-Mail&CID=cafdeb8e-3092-01f9-c425-a9a5a6112148" target="_blank" style="color: #4ecca3; text-decoration: none; font-size: 0.85rem; font-weight: bold;">Click here for more information</a>
 
-  <script>
-    function updateClock() {
-      const now = new Date();
-      const hours = now.getHours();
-      
-      // 1. Update Clock Display
-      const timeString = now.toLocaleTimeString();
-      const dateString = now.toLocaleDateString(undefined, { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-      });
-      document.getElementById('live-clock').innerHTML = `${dateString} <br> ${timeString}`;
-
-      // 2. Logic for Duty Timing (9 PM to 6 AM)
-      // 21 is 9 PM, 6 is 6 AM
-      const statusBadge = document.getElementById('duty-status');
-      
-      if (hours >= 21 || hours < 6) {
-        statusBadge.innerHTML = "ON DUTY";
-        statusBadge.className = "status-badge on-duty";
-      } else {
-        statusBadge.innerHTML = "OFF DUTY";
-        statusBadge.className = "status-badge off-duty";
-      }
-    }
-
-    // Run immediately and then every second
-    updateClock();
-    setInterval(updateClock, 1000);
-  </script>
-
-  <p style="font-size: 0.7rem; color: #fce4ec; margin-top: 20px;">Shift: 9:00 PM - 6:00 AM</p>
+  <p style="font-size: 0.75rem; color: #fce4ec; margin-top: 25px; opacity: 0.8;">Shift Time: 9:00 PM - 6:00 AM</p>
 </div>
 
-</body>
-
-</html>
+<script>
+  function updateClock() {
+    const now = new Date();
+    const hours = now.getHours();
+    
+    const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    const dateString = now.toLocaleDateString(undefined, { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+    document.getElementById('live-clock').innerHTML = `${dateString} <br> <strong style="font-size: 1.4rem;">${timeString}</strong>`;
