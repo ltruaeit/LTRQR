@@ -3,7 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  /* Centering the card on the screen */
+  /* 1. Body Layout: Centers the card */
   body { 
     font-family: 'Segoe UI', sans-serif; 
     background-color: #2E1B70; 
@@ -16,50 +16,92 @@
     position: relative;
   }
 
-  /* --- ADJUSTED: Larger Rectangle Logo Container --- */
+  /* 2. Wide Rectangle Logo Container */
   .logo-container {
     position: absolute;
     top: 25px;
     left: 25px;
     background-color: white; 
-    /* Increased horizontal padding (40px) to make it a long rectangle */
     padding: 12px 40px;      
     border-radius: 6px;      
     box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Added min-width to ensure it stays wide even with small icons */
     min-width: 150px; 
   }
 
   .top-left-img {
-    height: 50px; /* Slightly taller for better visibility */
+    height: 50px;
     width: auto;  
   }
-  /* -------------------------------------------------- */
 
+  /* 3. Card Styles */
   .card { 
     background: #E33970; 
-    border-radius: 15px; 
+    border-radius: 20px; 
     padding: 30px; 
-    box-shadow: 0 6px 20px rgba(0,0,0,0.4); 
-    border: 1px solid #0f3460; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+    border: 1px solid rgba(255,255,255,0.1); 
     max-width: 400px; 
     width: 90%; 
     text-align: center;
   }
 
-  h1 { color: #FFFFFF; font-size: 1.6rem; margin-bottom: 5px; }
+  h1 { color: #FFFFFF; font-size: 1.6rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
   #clock-container { margin: 15px 0; font-size: 1.1rem; }
   
   .staff-list { list-style: none; padding: 0; font-size: 1.3rem; margin: 20px 0; }
-  .staff-list li { padding: 15px 0; border-bottom: 1px solid rgba(15, 52, 96, 0.5); }
+  .staff-list li { padding: 15px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
   .staff-list li:last-child { border-bottom: none; }
   
-  .status-badge { padding: 5px 12px; border-radius: 10px; font-weight: bold; font-size: 0.85rem; transition: 0.3s; }
+  .status-badge { padding: 5px 12px; border-radius: 10px; font-weight: bold; font-size: 0.85rem; }
   .on-duty { background: #4ecca3; color: #1a1a2e; }
   .off-duty { background: #536162; color: white; }
+
+  /* --- NEW: Phone Section & Button --- */
+  .contact-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.3);
+  }
+
+  .call-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #4ecca3; /* Matching the On-Duty green */
+    color: #1a1a2e;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 12px 25px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(78, 204, 163, 0.4);
+    transition: transform 0.2s, background-color 0.2s;
+  }
+
+  .call-button:hover {
+    background-color: #45b792;
+    transform: scale(1.05);
+  }
+
+  .phone-label {
+    display: block;
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    color: #fce4ec;
+  }
+  /* ----------------------------------- */
+
+  .info-link {
+    display: block;
+    margin-top: 25px;
+    color: #ffffff;
+    text-decoration: underline;
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
 </style>
 </head>
 <body>
@@ -69,7 +111,7 @@
 </div>
 
 <div class="card">
-  <h1>Today IT Night Shift</h1>
+  <h1>IT Night Shift</h1>
   
   <div id="clock-container">
     <span id="live-clock">Loading...</span>
@@ -78,10 +120,17 @@
   <ul class="staff-list">
     <li> MYAT <span id="duty-status" class="status-badge">CHECKING...</span></li>
   </ul>
-  
-  <a href="https://aeliadutyfree.sharepoint.com/sites/Lagardere-Helpdesk2?CT=1768827189118&OR=OWA-NT-Mail&CID=cafdeb8e-3092-01f9-c425-a9a5a6112148" target="_blank" style="color: #4ecca3; text-decoration: none; font-size: 0.85rem; font-weight: bold;">Click here for more information</a>
 
-  <p style="font-size: 0.75rem; color: #fce4ec; margin-top: 25px; opacity: 0.8;">Shift Time: 9:00 PM - 6:00 AM</p>
+  <div class="contact-section">
+    <span class="phone-label">Need urgent support?</span>
+    <a href="tel:+1234567890" class="call-button">
+       📞 Call +971501058256
+    </a>
+  </div>
+  
+  <a href="https://aeliadutyfree.sharepoint.com/sites/Lagardere-Helpdesk2" target="_blank" class="info-link">Click here to raise ticket</a>
+
+  <p style="font-size: 0.75rem; color: #fce4ec; margin-top: 25px; opacity: 0.6;">Shift: 9:00 PM - 6:00 AM</p>
 </div>
 
 <script>
@@ -97,3 +146,21 @@
       day: 'numeric' 
     });
     document.getElementById('live-clock').innerHTML = `${dateString} <br> <strong style="font-size: 1.4rem;">${timeString}</strong>`;
+
+    const statusBadge = document.getElementById('duty-status');
+    
+    if (hours >= 21 || hours < 6) {
+      statusBadge.innerHTML = "ON DUTY";
+      statusBadge.className = "status-badge on-duty";
+    } else {
+      statusBadge.innerHTML = "OFF DUTY";
+      statusBadge.className = "status-badge off-duty";
+    }
+  }
+
+  updateClock();
+  setInterval(updateClock, 1000);
+</script>
+
+</body>
+</html>
