@@ -2,8 +2,9 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+
 <style>
-  /* Base Layout */
   body { 
     font-family: 'Segoe UI', sans-serif; 
     background-color: #2E1B70; 
@@ -16,45 +17,37 @@
     position: relative;
   }
 
-  /* --- FIXED: Logo Container for Mobile Dark Mode --- */
+  /* --- THE MOBILE FIX: Logo Container --- */
   .logo-container {
     position: absolute;
     top: 20px;
     left: 20px;
     
-    /* These 3 lines prevent mobile browsers from turning it black */
-    background-color: #FFFFFF !important; 
-    color-scheme: light !important;
-    filter: none !important;
-
-    padding: 10px 30px;      
-    border-radius: 6px;      
+    /* FIX: Browsers rarely invert gradients. We set a white gradient. */
+    background-image: linear-gradient(#ffffff, #ffffff) !important;
+    background-color: #ffffff !important;
+    
+    /* Standard styling */
+    padding: 12px 35px;      
+    border-radius: 8px;      
     box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     display: flex;
     justify-content: center;
     align-items: center;
-    min-width: 120px; 
-    z-index: 100; /* Ensures it stays on top */
+    min-width: 130px; 
+    z-index: 999;
   }
 
   .top-left-img {
-    height: 40px; /* Scaled slightly for mobile compatibility */
+    height: 45px;
     width: auto;
     display: block;
+    /* Prevent the image itself from being inverted */
+    filter: none !important;
+    -webkit-filter: none !important;
   }
 
-  /* Mobile adjustment: Move logo if screen is too small */
-  @media (max-width: 480px) {
-    .logo-container {
-      top: 10px;
-      left: 10px;
-      padding: 8px 20px;
-      min-width: 100px;
-    }
-    .top-left-img { height: 35px; }
-  }
-
-  /* Card Styles */
+  /* --- Card & Content --- */
   .card { 
     background: #E33970; 
     border-radius: 20px; 
@@ -67,13 +60,11 @@
   }
 
   h1 { color: #FFFFFF; font-size: 1.5rem; margin-bottom: 5px; text-transform: uppercase; }
-  #clock-container { margin: 15px 0; font-size: 1rem; }
   
   .staff-list { list-style: none; padding: 0; font-size: 1.2rem; margin: 20px 0; }
   .staff-list li { padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
-  .staff-list li:last-child { border-bottom: none; }
   
-  .status-badge { padding: 5px 12px; border-radius: 10px; font-weight: bold; font-size: 0.8rem; }
+  .status-badge { padding: 5px 12px; border-radius: 10px; font-weight: bold; font-size: 0.85rem; }
   .on-duty { background: #4ecca3; color: #1a1a2e; }
   .off-duty { background: #536162; color: white; }
 
@@ -92,39 +83,27 @@
     color: #1a1a2e;
     text-decoration: none;
     font-weight: bold;
-    font-size: 1rem;
-    padding: 12px 20px;
+    padding: 12px 25px;
     border-radius: 50px;
-    box-shadow: 0 4px 15px rgba(78, 204, 163, 0.3);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
   }
 
-  .phone-label {
-    display: block;
-    font-size: 0.8rem;
-    margin-bottom: 8px;
-    color: #fce4ec;
-  }
-
-  .info-link {
-    display: block;
-    margin-top: 25px;
-    color: #ffffff;
-    text-decoration: underline;
-    font-size: 0.8rem;
-    opacity: 0.8;
+  /* Responsive tweaks for very small phones */
+  @media (max-width: 400px) {
+    .logo-container { padding: 8px 20px; min-width: 100px; top: 10px; left: 10px; }
+    .top-left-img { height: 35px; }
   }
 </style>
 </head>
 <body>
 
-<div class="logo-container">
-    <img src="https://www.lagardere-tr.ae/sites/default/files/styles/185x58/public/logo_hd_3.png" alt="Logo" class="top-left-img">
+<div class="logo-container" style="background-color: white !important;">
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Logo" class="top-left-img">
 </div>
 
 <div class="card">
   <h1>IT Night Shift</h1>
-  
-  <div id="clock-container">
+  <div id="clock-container" style="margin: 15px 0;">
     <span id="live-clock">Loading...</span>
   </div>
 
@@ -133,33 +112,23 @@
   </ul>
 
   <div class="contact-section">
-    <span class="phone-label">Need urgent support?</span>
-    <a href="tel:+971501058256" class="call-button">
-       📞 Call +971 50 105 8256
-    </a>
+    <p style="font-size: 0.8rem; margin-bottom: 10px; color: #fce4ec;">Need urgent support?</p>
+    <a href="tel:+1234567890" class="call-button">📞 Call Support</a>
   </div>
   
-  <a href="https://aeliadutyfree.sharepoint.com/sites/Lagardere-Helpdesk2" target="_blank" class="info-link">Click here to raise ticket</a>
-
-  <p style="font-size: 0.7rem; color: #fce4ec; margin-top: 25px; opacity: 0.6;">Shift: 9:00 PM - 6:00 AM</p>
+  <a href="#" style="display:block; margin-top:20px; color:white; font-size:0.8rem;">View Schedule</a>
 </div>
 
 <script>
   function updateClock() {
     const now = new Date();
     const hours = now.getHours();
-    
     const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-    const dateString = now.toLocaleDateString(undefined, { 
-      weekday: 'long', 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    });
+    const dateString = now.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+    
     document.getElementById('live-clock').innerHTML = `${dateString} <br> <strong style="font-size: 1.3rem;">${timeString}</strong>`;
 
     const statusBadge = document.getElementById('duty-status');
-    
     if (hours >= 21 || hours < 6) {
       statusBadge.innerHTML = "ON DUTY";
       statusBadge.className = "status-badge on-duty";
@@ -168,7 +137,6 @@
       statusBadge.className = "status-badge off-duty";
     }
   }
-
   updateClock();
   setInterval(updateClock, 1000);
 </script>
