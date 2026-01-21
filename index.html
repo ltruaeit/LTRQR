@@ -1,119 +1,108 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-  /* Base Layout */
-  body { 
-    font-family: 'Segoe UI', sans-serif; 
-    background-color: #2E1B70; 
-    color: white; 
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    position: relative;
-  }
-
-  /* --- FIXED: Logo Container for Mobile Dark Mode --- */
-  .logo-container {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    
-    /* These 3 lines prevent mobile browsers from turning it black */
-    background-color: #FFFFFF !important; 
-    colors-cheme: light !important;
-    filter: none !important;
-
-    padding: 10px 30px;      
-    border-radius: 6px;      
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 120px; 
-    z-index: 100; /* Ensures it stays on top */
-  }
-
-  .top-left-img {
-    height: 40px; /* Scaled slightly for mobile compatibility */
-    width: auto;
-    display: block;
-  }
-
-  /* Mobile adjustment: Move logo if screen is too small */
-  @media (max-width: 480px) {
-    .logo-container {
-      top: 10px;
-      left: 10px;
-      padding: 8px 20px;
-      min-width: 100px;
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+   
+    body { 
+      font-family: 'Segoe UI', sans-serif; 
+      background-color: #2E1B70; 
+      color: white; 
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
     }
-    .top-left-img { height: 35px; }
-  }
 
-  /* Card Styles */
-  .card { 
-    background: #E33970; 
-    border-radius: 20px; 
-    padding: 30px; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-    border: 1px solid rgba(255,255,255,0.1); 
-    max-width: 400px; 
-    width: 85%; 
-    text-align: center;
-  }
+    
+    .logo-container {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: #FFFFFF !important; 
+      padding: 10px 30px;      
+      border-radius: 6px;      
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 120px; 
+      z-index: 100;
+    }
 
-  h1 { color: #FFFFFF; font-size: 1.5rem; margin-bottom: 5px; text-transform: uppercase; }
-  #clock-container { margin: 15px 0; font-size: 1rem; }
-  
-  .staff-list { list-style: none; padding: 0; font-size: 1.2rem; margin: 20px 0; }
-  .staff-list li { padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
-  .staff-list li:last-child { border-bottom: none; }
-  
-  .status-badge { padding: 5px 12px; border-radius: 10px; font-weight: bold; font-size: 0.8rem; }
-  .on-duty { background: #4ecca3; color: #1a1a2e; }
-  .off-duty { background: #536162; color: white; }
+    .top-left-img { height: 40px; width: auto; display: block; }
 
-  /* Contact Section */
-  .contact-section {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px dashed rgba(255, 255, 255, 0.3);
-  }
+   
+    .card { 
+      background: #E33970; 
+      border-radius: 20px; 
+      padding: 30px; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+      border: 1px solid rgba(255,255,255,0.1); 
+      max-width: 400px; 
+      width: 85%; 
+      text-align: center;
+      transition: all 0.3s ease;
+    }
 
-  .call-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #4ecca3; 
-    color: #1a1a2e;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1rem;
-    padding: 12px 20px;
-    border-radius: 50px;
-    box-shadow: 0 4px 15px rgba(78, 204, 163, 0.3);
-  }
+    .card.unavailable { background: #E33970; }
 
-  .phone-label {
-    display: block;
-    font-size: 0.8rem;
-    margin-bottom: 8px;
-    color: #fce4ec;
-  }
+    h1 { color: #FFFFFF; font-size: 1.5rem; margin-bottom: 5px; text-transform: uppercase; }
+    #clock-container { margin: 15px 0; font-size: 1rem; }
+    
+    .staff-list { list-style: none; padding: 0; font-size: 1.2rem; margin: 20px 0; }
+    .staff-list li { padding: 12px 0; }
+    
+    .status-badge { padding: 6px 15px; border-radius: 10px; font-weight: bold; font-size: 0.9rem; }
+    .on-duty { background: #4ecca3; color: #1a1a2e; }
+    .off-duty { background: #536162; color: white; }
+    .no-shift { background: #ff4757; color: white; display: inline-block; margin-top: 10px; }
 
-  .info-link {
-    display: block;
-    margin-top: 25px;
-    color: #ffffff;
-    text-decoration: underline;
-    font-size: 0.8rem;
-    opacity: 0.8;
-  }
-</style>
+   
+    .contact-section {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+
+    
+    .action-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #4ecca3;
+      color: #1a1a2e;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      padding: 12px 20px;
+      border-radius: 50px;
+      width: 100%;
+      max-width: 250px;
+      box-sizing: border-box;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .info-link {
+      display: block;
+      margin-top: 25px;
+      color: #ffffff;
+      text-decoration: underline;
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+
+    @media (max-width: 480px) {
+      .logo-container { top: 10px; left: 10px; padding: 8px 20px; min-width: 100px; }
+      .top-left-img { height: 35px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -121,51 +110,97 @@
     <img src="https://www.lagardere-tr.ae/sites/default/files/styles/185x58/public/logo_hd_3.png" alt="Logo" class="top-left-img">
 </div>
 
-<div class="card">
-  <h1>IT Night Shift</h1>
+<div class="card" id="main-card">
+  <h1 id="header-title">IT Night Shift</h1>
   
   <div id="clock-container">
     <span id="live-clock">Loading...</span>
   </div>
 
   <ul class="staff-list">
-    <li> MYAT <span id="duty-status" class="status-badge">CHECKING...</span></li>
+    <li>
+      <span id="staff-name">NAME</span> 
+      <span id="duty-status" class="status-badge">CHECKING...</span>
+    </li>
   </ul>
 
-  <div class="contact-section">
-    <span class="phone-label">Need urgent support?</span>
-    <a href="tel:+971501058256" class="call-button">
-       📞 Call +971 50 105 8256
+  <div id="contact-area" class="contact-section">
+    <span class="phone-label" style="display:block; font-size:0.8rem; color: #fce4ec;">Need urgent support?</span>
+    
+    <a href="#" id="whatsapp-link" target="_blank" class="action-button">
+       💬 Message via WhatsApp
+    </a>
+
+    <a href="#" id="call-link" class="action-button">
+       <span id="display-phone">📞 Call Support</span>
     </a>
   </div>
   
   <a href="https://aeliadutyfree.sharepoint.com/sites/Lagardere-Helpdesk2" target="_blank" class="info-link">Click here to raise ticket</a>
 
-  <p style="font-size: 0.7rem; color: #fce4ec; margin-top: 25px; opacity: 0.6;">Shift: 9:00 PM - 6:00 AM</p>
+  <p id="shift-info" style="font-size: 0.7rem; color: #fce4ec; margin-top: 25px; opacity: 0.6;">Shift: 9:00 PM - 6:00 AM</p>
 </div>
 
 <script>
+  // ==========================================
+  // --- SHIFT SETTINGS  ---
+  // ==========================================
+  const shiftConfig = {
+    isShiftAvailable: true,         // Set to false for "No Night Shift"
+    staffName: "MYAT",              
+    phoneNumber: "+971501058256"    
+  };
+  // ==========================================
+
   function updateClock() {
     const now = new Date();
     const hours = now.getHours();
     
     const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-    const dateString = now.toLocaleDateString(undefined, { 
-      weekday: 'long', 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    });
+    const dateString = now.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
     document.getElementById('live-clock').innerHTML = `${dateString} <br> <strong style="font-size: 1.3rem;">${timeString}</strong>`;
 
     const statusBadge = document.getElementById('duty-status');
-    
-    if (hours >= 21 || hours < 6) {
-      statusBadge.innerHTML = "ON DUTY";
-      statusBadge.className = "status-badge on-duty";
+    const staffNameEl = document.getElementById('staff-name');
+    const card = document.getElementById('main-card');
+    const contactArea = document.getElementById('contact-area');
+    const headerTitle = document.getElementById('header-title');
+    const shiftInfo = document.getElementById('shift-info');
+    const callLink = document.getElementById('call-link');
+    const whatsappLink = document.getElementById('whatsapp-link');
+    const displayPhone = document.getElementById('display-phone');
+
+    if (!shiftConfig.isShiftAvailable) {
+      staffNameEl.style.display = "none";
+      statusBadge.innerHTML = "NO NIGHT SHIFT AVAILABLE TODAY";
+      statusBadge.className = "status-badge no-shift";
+      card.classList.add('unavailable');
+      contactArea.style.display = "none"; 
+      headerTitle.innerHTML = "Service Notice";
+      shiftInfo.innerHTML = "Night shift is currently unavailable.";
     } else {
-      statusBadge.innerHTML = "OFF DUTY";
-      statusBadge.className = "status-badge off-duty";
+      staffNameEl.style.display = "inline";
+      staffNameEl.innerHTML = shiftConfig.staffName;
+      
+     
+      callLink.href = "tel:" + shiftConfig.phoneNumber;
+      displayPhone.innerHTML = "📞 Call " + shiftConfig.phoneNumber;
+
+      const cleanNumber = shiftConfig.phoneNumber.replace('+', '');
+      whatsappLink.href = "https://wa.me/" + cleanNumber;
+
+      card.classList.remove('unavailable');
+      contactArea.style.display = "flex";
+      headerTitle.innerHTML = "IT Night Shift";
+      shiftInfo.innerHTML = "Shift: 9:00 PM - 6:00 AM";
+
+      if (hours >= 21 || hours < 6) {
+        statusBadge.innerHTML = "ON DUTY";
+        statusBadge.className = "status-badge on-duty";
+      } else {
+        statusBadge.innerHTML = "OFF DUTY";
+        statusBadge.className = "status-badge off-duty";
+      }
     }
   }
 
